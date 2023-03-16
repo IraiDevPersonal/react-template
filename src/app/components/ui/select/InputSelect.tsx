@@ -18,6 +18,7 @@ export const InputSelect = forwardRef(({ id, placeholder, onChange }: Props, ref
       `}
       ref={ref}
       type="text"
+      name={`input-select-${id}`}
       placeholder={placeholder}
       autoCorrect='off'
       autoComplete='off'

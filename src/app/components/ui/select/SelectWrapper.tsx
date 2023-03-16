@@ -22,7 +22,7 @@ export function SelectWrapper({ children, label, isMulti = false, ...props }: Pr
     <div className='space-y-1 relative'>
       <FieldWrapper {...props} className={className}>
         {children}
-        <Label label={label!} />
+        <Label label={label!} forceFocused={isMulti} />
         <Icon />
       </FieldWrapper>
       <FieldHelper isError={props.error} helperText={props.helperText} />
@@ -39,10 +39,10 @@ function Icon() {
   )
 }
 
-function Label({ label }: { label: string }) {
+function Label({ label, forceFocused = false }: { label: string, forceFocused?: boolean }) {
   return (
     <span
-      className="absolute left-3 top-3 -translate-y-1/2 text-xs text-gray-400 transition-all peer-placeholder-shown:top-1/2 w-max peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs peer-focus:text-indigo-500"
+      className={`absolute left-3 top-3 -translate-y-1/2 text-xs text-gray-400 transition-all w-max peer-focus:top-3 peer-focus:text-xs peer-focus:text-indigo-500 ${forceFocused ? '' : 'peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm '}`}
     >
       {label}:
     </span>

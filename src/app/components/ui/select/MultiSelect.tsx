@@ -35,7 +35,7 @@ export function MultiSelect({
         disabled={disabled}
         label={props.label}
         helperText={helperText}
-        isMulti={value.length > 0 ?? selectValue.length > 0}
+        isMulti={value.length > 0 || selectValue.length > 0}
         onClick={handleOpenOptions}
         dropdown={
           <SelectDropdown

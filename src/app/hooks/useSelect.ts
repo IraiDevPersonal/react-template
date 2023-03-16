@@ -28,7 +28,7 @@ export function useSelect({ findBy, options, value, name, enableEmptyOption = fa
     setInputValue(option.label)
     setSelectValue(option)
     setAvatar(option.avatar)
-    onChange!({ target: { value: option, type: 'text', name: name! } })
+    onChange?.({ target: { value: option, type: 'text', name: name! } })
     setOptionsState(adaptedOptions(enableEmptyOption, options))
   }
 
@@ -62,7 +62,7 @@ export function useSelect({ findBy, options, value, name, enableEmptyOption = fa
       if ((wrapperRef.current != null) && !wrapperRef.current.contains(e.target as Node)) {
         setIsOpen(false)
         Boolean(onBlur) &&
-          onBlur!({ target: { value: value!, type: 'text', name: name ?? '' } })
+          onBlur?.({ target: { value: value!, type: 'text', name: name ?? '' } })
       }
     }
 

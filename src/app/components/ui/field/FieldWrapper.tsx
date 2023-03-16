@@ -25,7 +25,7 @@ export function FieldWrapper({ children, htmlFor, error, disabled, className = '
     <label
       onClick={onClick}
       htmlFor={htmlFor}
-      className={`relative block overflow-hidden rounded-xl border px-3 pt-3 shadow-sm focus-within:ring-1 text-neutral-700 transition
+      className={`relative flex items-center gap-2 overflow-hidden rounded-xl border px-3 pt-3 shadow-sm focus-within:ring-1 text-neutral-700 transition
       ${styles({ error, disabled })}
       ${className}
     `}>

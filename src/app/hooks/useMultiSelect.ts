@@ -18,19 +18,22 @@ export function useMultiSelect({ findBy, options, value = [], name, onBlur, onCh
   }
 
   const handleSelectOption = (option: SelectOption) => {
-    const values: string[] = [...value, option.value]
-    setInputValue(' ')
-    setSelectValue(values)
-    onChange!({ target: { value: values, type: 'text', name: name! } })
+    let values: string[] = [...value, option.value]
+    setInputValue('')
+    setSelectValue(prevValue => {
+      values = [...values, ...prevValue]
+      return values
+    })
+    onChange?.({ target: { value: values, type: 'text', name: name! } })
     setOptionsState(options.filter((opt) => !values.includes(opt.value)))
-    setInputValue(values.length > 0 ? ' ' : '')
   }
 
   const handleClearOption = (key: string) => {
-    const values: string[] = [...value].filter((item) => item !== key)
-    onChange!({ target: { value: values, type: 'text', name: name! } })
+    const values: string[] = [...value, ...selectValue].filter((item) => item !== key)
+    onChange?.({ target: { value: values, type: 'text', name: name! } })
     setOptionsState(options.filter((opt) => !values.includes(opt.value)))
-    setInputValue(values.length > 0 ? ' ' : '')
+    setInputValue('')
+    setSelectValue(values)
   }
 
   const handleFindInOptions = (e: ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +52,7 @@ export function useMultiSelect({ findBy, options, value = [], name, onBlur, onCh
   }
   // first load component
   useEffect(() => {
-    setInputValue(value.length > 0 ? ' ' : '')
+    setInputValue('')
     setOptionsState(options.filter((opt) => !value.includes(opt.value)))
     // eslint-disable-next-line
   }, [options])
@@ -59,7 +62,7 @@ export function useMultiSelect({ findBy, options, value = [], name, onBlur, onCh
       if ((wrapperRef.current != null) && !wrapperRef.current.contains(e.target as Node)) {
         setIsOpen(false)
         Boolean(onBlur) &&
-          onBlur!({ target: { value, type: 'text', name: name! } })
+          onBlur?.({ target: { value, type: 'text', name: name! } })
       }
     }
 

@@ -39,6 +39,7 @@ export function MultiSelect({
         onClick={handleOpenOptions}
         dropdown={
           <SelectDropdown
+            disableActiveSelection
             items={options}
             isOpen={isOpen}
             helpertext={helperText}

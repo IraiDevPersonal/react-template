@@ -18,13 +18,11 @@ export function useMultiSelect({ findBy, options, value = [], name, onBlur, onCh
   }
 
   const handleSelectOption = (option: SelectOption) => {
-    let values: string[] = [...value, option.value]
+    const values: string[] = [...value, ...selectValue, option.value]
     setInputValue('')
-    setSelectValue(prevValue => {
-      values = [...values, ...prevValue]
-      return values
-    })
+    setSelectValue(values)
     onChange?.({ target: { value: values, type: 'text', name: name! } })
+    console.log(values, options.filter((opt) => !values.includes(opt.value)))
     setOptionsState(options.filter((opt) => !values.includes(opt.value)))
   }
 
@@ -38,7 +36,7 @@ export function useMultiSelect({ findBy, options, value = [], name, onBlur, onCh
 
   const handleFindInOptions = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value
-    const notSelectedOptions = options.filter(opt => [...value].includes(opt.value))
+    const notSelectedOptions = options.filter(opt => [...value, ...selectValue].includes(opt.value))
     setInputValue(inputValue)
     if (findBy === 'label') {
       setOptionsState(

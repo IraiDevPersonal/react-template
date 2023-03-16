@@ -3,18 +3,19 @@ import { useState } from 'react'
 import { AvatarSelect } from './AvatarSelect'
 
 interface Props {
-  items: SelectOption[]
   isOpen: boolean
-  selectedValue?: SelectOption
   helpertext: string
+  disableActiveSelection?: boolean
+  items: SelectOption[]
+  selectedValue?: SelectOption
   onSelect: (option: SelectOption) => void
 }
 
-export function SelectDropdown({ items = [], isOpen, onSelect, selectedValue, helpertext }: Props) {
+export function SelectDropdown({ items = [], isOpen, onSelect, selectedValue, helpertext, disableActiveSelection = false }: Props) {
   const [selected, setSelected] = useState<SelectOption | undefined>(selectedValue)
 
   const handleSelectItem = (option: SelectOption) => {
-    setSelected(option)
+    !disableActiveSelection && setSelected(option)
     onSelect?.(option)
   }
 

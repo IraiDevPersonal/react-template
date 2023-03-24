@@ -1,4 +1,4 @@
-import { type ColorsProps } from './types'
+import { type ColorsProps, type SizeProps } from './types'
 
 export const FILLED_COLORS = {
   default: 'text-default-1100 bg-default-100 hover:bg-default-200 dark:text-default-100 dark:bg-default-1100 dark:hover:bg-default-1000',
@@ -8,7 +8,7 @@ export const FILLED_COLORS = {
   secondary: 'text-white bg-secondry-200 hover:bg-secondry-300 dark:hover:bg-secondry-100',
   success: 'text-white bg-success-200 hover:bg-success-300 dark:hover:bg-success-100',
   warning: 'text-white bg-warning-200 hover:bg-warning-300 dark:hover:bg-warning-100'
-}
+} as const
 
 const OUTLINED_COLORS = {
   default: 'border-2 text-default-1100 border-default-1000 hover:bg-default-1100 hover:text-default-100 dark:text-default-200 dark:border-default-200 dark:hover:bg-default-200 dark:hover:text-default-1100',
@@ -18,7 +18,7 @@ const OUTLINED_COLORS = {
   secondary: 'border-2 text-secondary-200 border-secondary-200 hover:bg-secondary-200/10 dark:text-secondary-100 dark:hover:bg-secondary-100/10',
   success: 'border-2 text-success-200 border-success-200 hover:bg-success-200/10 dark:text-success-100 dark:hover:bg-success-100/10',
   warning: 'border-2 text-warning-200 border-warning-200 hover:bg-warning-200/10 dark:text-warning-100 dark:hover:bg-warning-100/10'
-}
+} as const
 
 const SMOOTH_COLORS = {
   default: 'text-default-1100 bg-default-1100/20 hover:bg-default-1100/30 dark:text-default-100 dark:bg-default-1000 dark:hover:bg-default-100/20',
@@ -28,7 +28,7 @@ const SMOOTH_COLORS = {
   secondary: 'text-primary-300 bg-primary-200/20 hover:bg-primary-200/30 dark:text-primary-100 dark:bg-primary-100 dark:hover:bg-primary-100/20',
   success: 'text-success-300 bg-success-200/20 hover:bg-success-200/30 dark:text-success-100 dark:bg-success-100 dark:hover:bg-success-100/20',
   warning: 'text-warning-300 bg-warning-200/20 hover:bg-warning-200/30 dark:text-warning-100 dark:bg-warning-100 dark:hover:bg-warning-100/20'
-}
+} as const
 
 const TEXT_COLORS = {
   default: 'text-default-1100 bg-transparent hover:bg-default-1000/20 dark:text-default-100 dark:bg-transparent dark:hover:bg-default-200/20',
@@ -38,15 +38,53 @@ const TEXT_COLORS = {
   secondary: 'text-primary-200 bg-transparent hover:bg-primary-100/20 dark:text-primary-100 dark:bg-transparent dark:hover:bg-primary-200/20',
   success: 'text-success-200 bg-transparent hover:bg-success-100/20 dark:text-success-100 dark:bg-transparent dark:hover:bg-success-200/20',
   warning: 'text-warning-200 bg-transparent hover:bg-warning-100/20 dark:text-warning-100 dark:bg-transparent dark:hover:bg-warning-200/20'
-}
+} as const
 
 export const VARIANTS = {
   filled: FILLED_COLORS,
   outlined: OUTLINED_COLORS,
   smooth: SMOOTH_COLORS,
   text: TEXT_COLORS
+} as const
+
+export const TEXT_SIZES = {
+  xs: 'text-xs',
+  sm: 'text-sm',
+  base: 'text-base',
+  md: 'text-md',
+  lg: 'text-lg',
+  xl: 'text-xl',
+  '2xl': 'text-2xl',
+  '3xl': 'text-3xl',
+  '4xl': 'text-4xl',
+  '5xl': 'text-5xl',
+  '6xl': 'text-6xl',
+  '7xl': 'text-7xl'
+} as const
+
+const WIDTH_SIZE = {
+  xs: 'max-w-xs',
+  sm: 'max-w-sm',
+  base: '',
+  md: 'max-w-md',
+  lg: 'max-w-lg',
+  xl: 'max-w-xl',
+  '2xl': 'max-w-2xl',
+  '3xl': 'max-w-3xl',
+  '4xl': 'max-w-4xl',
+  '5xl': 'max-w-5xl',
+  '6xl': 'max-w-6xl',
+  '7xl': 'max-w-7xl'
+} as const
+
+export function selectedColor ({ variant, color }: ColorsProps) {
+  return VARIANTS[variant][color]
 }
 
-export function color({ variant, color }: ColorsProps) {
-  return VARIANTS[variant][color]
+export function selectedSize ({ size, variant }: SizeProps) {
+  if (variant === 'text') {
+    return TEXT_SIZES[size]
+  }
+
+  return WIDTH_SIZE[size]
 }

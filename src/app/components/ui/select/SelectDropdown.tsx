@@ -1,6 +1,7 @@
-import { type SelectOption } from '@/utils/types'
 import { useState } from 'react'
+import { useTransition, animated } from '@react-spring/web'
 import { AvatarSelect } from './AvatarSelect'
+import { type SelectOption } from '@/utils/types'
 
 interface Props {
   isOpen: boolean
@@ -13,18 +14,25 @@ interface Props {
 
 export function SelectDropdown({ items = [], isOpen, onSelect, selectedValue, helpertext, disableActiveSelection = false }: Props) {
   const [selected, setSelected] = useState<SelectOption | undefined>(selectedValue)
+  const transition = useTransition(isOpen, {
+    from: { opacity: 1, transform: 'scale(0.97)' },
+    enter: { opacity: 1, transform: 'scale(1)' },
+    leave: { opacity: 0, transform: 'scale(0.9)' },
+    config: {
+      duration: 150
+    }
+  })
 
   const handleSelectItem = (option: SelectOption) => {
     !disableActiveSelection && setSelected(option)
     onSelect?.(option)
   }
 
-  if (!isOpen) return null
-
-  return (
-    <div
+  return transition((style, item) => item && (
+    <animated.div
+      style={style}
       className={`
-         absolute bg-white rounded-xl w-full text-sm shadow-sm
+         absolute bg-white rounded-xl w-full text-sm shadow-sm origin-top
          overflow-hidden z-50 border transition-colors border-gray-200
          ${helpertext === '' ? 'top-full' : selectedValue === undefined ? 'top-[75%]' : 'top-[70%]'}
       `}
@@ -50,6 +58,6 @@ export function SelectDropdown({ items = [], isOpen, onSelect, selectedValue, he
           <li className="px-1 py-2 text-neutral-300">No hay opciones...</li>
         }
       </ul>
-    </div>
-  )
+    </animated.div>
+  ))
 }

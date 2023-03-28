@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Button, IconButton, Input, Modal, ModalAction, MultiSelect, Select, Textarea } from './components/ui'
-import '@css/index.css'
 import { type SelectOption } from '@/utils/types'
 import { IconBackspace } from '@tabler/icons-react'
+import '@css/index.css'
 
 const OPTIONS: SelectOption[] = [
   { label: 'valor 1', value: '1' },
@@ -13,6 +13,7 @@ const OPTIONS: SelectOption[] = [
 
 export default function App () {
   const [value, setValue] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
   // const [multiselect, setMultiselect] = useState<string[]>(['1'])
   // const [select, setSelect] = useState<SelectOption>({ label: 'ninguno', value: '' })
   return (
@@ -26,8 +27,8 @@ export default function App () {
       <MultiSelect label='multi-select' value={multiselect} onChange={e => { setMultiselect(e.target.value) }} options={OPTIONS} helperText={value} /> */}
 
       <div className='flex items-center gap-2'>
-        <Button color='error' disabled>
-          boton 1
+        <Button color='error' onClick={() => { setIsOpen(true) }}>
+          open modal
         </Button>
 
         <IconButton color='info'>
@@ -35,7 +36,7 @@ export default function App () {
         </IconButton>
       </div>
 
-      <Modal title='Titulo' isOpen onClose={() => {}}>
+      <Modal title='Titulo' isOpen={isOpen} onClose={() => { setIsOpen(false) }}>
         <section className='p-3'>
           <Input
             startAdorment={<>https://</>}

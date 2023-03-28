@@ -1,10 +1,10 @@
 import { createPortal } from 'react-dom'
-import { Backdrop, CloseButton, ModalWrapper } from '../'
+import { Backdrop, ModalHeader, ModalWrapper } from '../'
 import { type Size } from '@/utils/types'
 
 const MODAL_ROOT = document.getElementById('modal-root')
 
-interface Props {
+export interface ModalProps {
   onClose: () => void
   isOpen: boolean
   title?: string
@@ -17,19 +17,14 @@ export function Modal ({
   children,
   isOpen,
   onClose,
-  maxWidth = 'md',
+  maxWidth,
   title,
-  hideCloseBtn = false
-}: Props) {
+  hideCloseBtn
+}: ModalProps) {
   return createPortal(
-    <Backdrop>
-      <ModalWrapper maxWidth={maxWidth}>
-        {title !== undefined &&
-          <header className='p-3'>
-            <CloseButton hidden={hideCloseBtn} onClick={onClose} />
-            <h1 className='text-xl font-semibold'>{title}</h1>
-          </header>
-        }
+    <Backdrop isOpen={isOpen}>
+      <ModalWrapper isOpen={isOpen} maxWidth={maxWidth}>
+        <ModalHeader onClose={onClose} hideCloseBtn={hideCloseBtn} title={title} />
         <>{children}</>
       </ModalWrapper>
     </Backdrop>,

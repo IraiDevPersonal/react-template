@@ -32,8 +32,8 @@ function snackbar (item: Snackbar, maxStack: number, prevState: Snackbar[]) {
   }
 
   if (prevState.length === maxStack) {
-    const filterLastItem = prevState.filter((_, idx) => idx !== 0)
-    return [...filterLastItem, item]
+    const filteredItems = prevState.filter((_, idx) => idx !== 0)
+    return [...filteredItems, item]
   }
 
   return [...prevState, item]

@@ -1,9 +1,14 @@
 import { useTransition, animated } from '@react-spring/web'
 import { type ModalProps } from './Modal'
 
-type Props = Pick<ModalProps, 'children' | 'isOpen'>
+type Props = Pick<ModalProps, 'children' | 'isOpen' | 'backdropCloseModal' | 'onClose'>
 
-export function Backdrop ({ children, isOpen }: Props) {
+export function Backdrop ({
+  children,
+  isOpen,
+  backdropCloseModal = false,
+  onClose
+}: Props) {
   const transition = useTransition(isOpen, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
@@ -12,6 +17,7 @@ export function Backdrop ({ children, isOpen }: Props) {
 
   return transition((style, item) => item && (
     <animated.main
+      onClick={backdropCloseModal ? onClose : undefined}
       style={style}
       className='
         h-screen w-full grid place-content-center fixed inset-0

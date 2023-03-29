@@ -11,7 +11,7 @@ interface SyntheticEvent<Value> {
 }
 
 interface FieldProps<Event, Value> {
-  hiiden?: boolean
+  hidden?: boolean
   defaultValue?: string
   value?: Value
   checked?: boolean

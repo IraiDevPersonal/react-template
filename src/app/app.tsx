@@ -1,7 +1,9 @@
 import { useState } from 'react'
-import { Button, IconButton, Input, Modal, ModalAction, MultiSelect, Select, Textarea } from './components/ui'
+import { v4 as uuid } from 'uuid'
+import { Button, IconButton, Input, Modal, ModalAction, MultiSelect, Select, Snackbar, Textarea } from './components/ui'
 import { type SelectOption } from '@/utils/types'
 import { IconBackspace } from '@tabler/icons-react'
+import { useSnackbar } from './hooks'
 import '@css/index.css'
 
 const OPTIONS: SelectOption[] = [
@@ -12,6 +14,7 @@ const OPTIONS: SelectOption[] = [
 ]
 
 export default function App () {
+  const { snackbarApiResponse } = useSnackbar()
   const [value, setValue] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   // const [multiselect, setMultiselect] = useState<string[]>(['1'])
@@ -31,12 +34,19 @@ export default function App () {
           open modal
         </Button>
 
-        <IconButton color='info'>
+        <IconButton color='info' onClick={() => {
+          snackbarApiResponse({
+            ok: true,
+            message: uuid()
+          })
+        }}>
           <IconBackspace />
         </IconButton>
       </div>
 
-      <Modal title='Titulo' isOpen={isOpen} onClose={() => { setIsOpen(false) }}>
+      <Snackbar />
+
+      <Modal backdropCloseModal title='Titulo' isOpen={isOpen} onClose={() => { setIsOpen(false) }}>
         <section className='p-3'>
           <Input
             startAdorment={<>https://</>}

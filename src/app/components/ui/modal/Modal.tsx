@@ -11,6 +11,7 @@ export interface ModalProps {
   maxWidth?: Size
   hideCloseBtn?: boolean
   children: React.ReactNode
+  backdropCloseModal?: boolean
 }
 
 export function Modal ({
@@ -19,10 +20,15 @@ export function Modal ({
   onClose,
   maxWidth,
   title,
-  hideCloseBtn
+  hideCloseBtn,
+  backdropCloseModal
 }: ModalProps) {
   return createPortal(
-    <Backdrop isOpen={isOpen}>
+    <Backdrop
+      backdropCloseModal={backdropCloseModal}
+      isOpen={isOpen}
+      onClose={onClose}
+    >
       <ModalWrapper isOpen={isOpen} maxWidth={maxWidth}>
         <ModalHeader onClose={onClose} hideCloseBtn={hideCloseBtn} title={title} />
         <>{children}</>
